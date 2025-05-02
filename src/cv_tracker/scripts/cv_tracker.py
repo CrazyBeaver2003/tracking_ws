@@ -199,8 +199,8 @@ class ObjectTracker:
                     self.last_face_check_time = current_time
             
             # Отображение результата
-            cv2.imshow("Трекинг лица", cv_image)
-            cv2.waitKey(1)
+            # cv2.imshow("Трекинг лица", cv_image)
+            # cv2.waitKey(1)
             
         except Exception as e:
             rospy.logerr(f"Ошибка при обработке изображения: {str(e)}")
