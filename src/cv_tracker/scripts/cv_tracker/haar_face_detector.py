@@ -80,7 +80,7 @@ class HaarFaceDetector:
             target_msg.image_width = width
             
             # Отрисовка bbox для каждого обнаруженного лица
-            for (x, y, w, h) in faces:
+            for i, (x, y, w, h) in enumerate(faces):
                 # Добавляем BoundingBox в Target
                 bbox = BoundingBox()
                 
@@ -94,7 +94,7 @@ class HaarFaceDetector:
                 bbox.area = w * h
                 bbox.size_x = w
                 bbox.size_y = h
-                bbox.name = "face"
+                bbox.name = f"face{i}"
                 
                 # Добавляем bbox в массив
                 target_msg.boxes.append(bbox)

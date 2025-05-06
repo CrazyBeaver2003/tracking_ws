@@ -27,7 +27,7 @@ class RKNN_model_container:
         self.rknn.load_rknn(model_path)
         
         print("--> Инициализация среды выполнения")
-        ret = self.rknn.init_runtime()
+        ret = self.rknn.init_runtime(core_mask=RKNNLite.NPU_CORE_0_1_2)
         if ret != 0:
             print("Ошибка инициализации среды выполнения")
             raise RuntimeError(f"Ошибка инициализации RKNN: {ret}")

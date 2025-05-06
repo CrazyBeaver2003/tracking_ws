@@ -135,6 +135,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/tracking_ws/src/cv_tracker/CMakeLists.txt"
   "/root/tracking_ws/src/cv_tracker/package.xml"
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/cv_tracker.py"
+  "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/face_recognizer.py"
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/haar_face_detector.py"
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/image_publisher.py"
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/retinaface.py"
@@ -251,6 +252,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "atomic_configure/retinaface.py"
   "cv_tracker/catkin_generated/stamps/cv_tracker/haar_face_detector.py.stamp"
   "atomic_configure/haar_face_detector.py"
+  "cv_tracker/catkin_generated/stamps/cv_tracker/face_recognizer.py.stamp"
+  "atomic_configure/face_recognizer.py"
   "cv_tracker/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
