@@ -7,7 +7,7 @@ from sensor_msgs.msg import CompressedImage
 from cv_bridge import CvBridge
 from geometry_msgs.msg import Point
 
-path_to_known_image = "/home/timoha/Pictures/photo.jpg"
+path_to_known_image = "/root/diplom_ws/data/photo.jpg"
 
 class ObjectTracker:
     def __init__(self):
@@ -15,7 +15,7 @@ class ObjectTracker:
         rospy.init_node('cv_tracker', anonymous=True)
         
         rospy.loginfo("Инициализация трекера...")
-        self.tracker = cv2.TrackerCSRT_create()
+        self.tracker = cv2.TrackerKCF_create()
         self.bbox = None
         self.tracking = False
         self.bridge = CvBridge()
@@ -128,12 +128,12 @@ class ObjectTracker:
         """Инициализация трекера с выбранной областью"""
         try:
             rospy.loginfo(f"Инициализация трекера с bbox: {bbox}")
-            self.tracker = cv2.TrackerCSRT_create()
+            self.tracker = cv2.TrackerKCF_create()
             self.tracking = self.tracker.init(frame, bbox)
             if self.tracking:
                 rospy.loginfo("Трекер успешно инициализирован")
-            else:
-                rospy.logerr("Не удалось инициализировать трекер")
+            # else:
+            #     rospy.logerr("Не удалось инициализировать трекер")
             return self.tracking
         except Exception as e:
             rospy.logerr(f"Ошибка при инициализации трекера: {str(e)}")
@@ -199,8 +199,8 @@ class ObjectTracker:
                     self.last_face_check_time = current_time
             
             # Отображение результата
-            cv2.imshow("Трекинг лица", cv_image)
-            cv2.waitKey(1)
+            # cv2.imshow("Трекинг лица", cv_image)
+            # cv2.waitKey(1)
             
         except Exception as e:
             rospy.logerr(f"Ошибка при обработке изображения: {str(e)}")

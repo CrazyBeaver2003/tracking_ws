@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/timoha/Coding/tracking_ws/build'
+export PWD='/root/tracking_ws/build'

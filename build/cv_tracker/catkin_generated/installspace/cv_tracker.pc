@@ -1,8 +1,8 @@
-prefix=/home/timoha/Coding/tracking_ws/install
+prefix=/root/tracking_ws/install
 
 Name: cv_tracker
 Description: Description of cv_tracker
 Version: 0.0.0
-Cflags: 
+Cflags: -I${prefix}/include
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: rospy sensor_msgs std_msgs message_runtime geometry_msgs

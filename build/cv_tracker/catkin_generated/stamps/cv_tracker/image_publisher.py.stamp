@@ -13,6 +13,8 @@ class ImagePublisher:
         
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         self.cap.set(cv2.CAP_PROP_FPS, 30)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
         
         if not self.cap.isOpened():
             rospy.logerr("Не удалось открыть камеру")

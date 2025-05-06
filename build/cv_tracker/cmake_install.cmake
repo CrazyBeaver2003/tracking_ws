@@ -1,8 +1,8 @@
-# Install script for directory: /home/timoha/Coding/tracking_ws/src/cv_tracker
+# Install script for directory: /root/tracking_ws/src/cv_tracker
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/timoha/Coding/tracking_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/root/tracking_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -37,26 +37,86 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/timoha/Coding/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_tracker.pc")
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker/cmake" TYPE FILE FILES
-    "/home/timoha/Coding/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_trackerConfig.cmake"
-    "/home/timoha/Coding/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_trackerConfig-version.cmake"
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  include("/root/tracking_ws/build/cv_tracker/catkin_generated/safe_execute_install.cmake")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker/msg" TYPE FILE FILES
+    "/root/tracking_ws/src/cv_tracker/msg/Target.msg"
+    "/root/tracking_ws/src/cv_tracker/msg/BoundingBox.msg"
     )
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker" TYPE FILE FILES "/home/timoha/Coding/tracking_ws/src/cv_tracker/package.xml")
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker/cmake" TYPE FILE FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_tracker-msg-paths.cmake")
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/home/timoha/Coding/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_tracker.py")
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/root/tracking_ws/devel/include/cv_tracker")
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/home/timoha/Coding/tracking_ws/build/cv_tracker/catkin_generated/installspace/image_publisher.py")
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/root/tracking_ws/devel/share/roseus/ros/cv_tracker")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/root/tracking_ws/devel/share/common-lisp/ros/cv_tracker")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/root/tracking_ws/devel/share/gennodejs/ros/cv_tracker")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  execute_process(COMMAND "/usr/bin/python3" -m compileall "/root/tracking_ws/devel/lib/python3/dist-packages/cv_tracker")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/root/tracking_ws/devel/lib/python3/dist-packages/cv_tracker" REGEX "/\\_\\_init\\_\\_\\.py$" EXCLUDE REGEX "/\\_\\_init\\_\\_\\.pyc$" EXCLUDE)
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/root/tracking_ws/devel/lib/python3/dist-packages/cv_tracker" FILES_MATCHING REGEX "/root/tracking_ws/devel/lib/python3/dist-packages/cv_tracker/.+/__init__.pyc?$")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_tracker.pc")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker/cmake" TYPE FILE FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_tracker-msg-extras.cmake")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker/cmake" TYPE FILE FILES
+    "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_trackerConfig.cmake"
+    "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_trackerConfig-version.cmake"
+    )
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cv_tracker" TYPE FILE FILES "/root/tracking_ws/src/cv_tracker/package.xml")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/cv_tracker.py")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/image_publisher.py")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/retinaface.py")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/haar_face_detector.py")
 endif()
 
