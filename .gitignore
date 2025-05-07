@@ -7,3 +7,4 @@ devel/
 log/
 .vscode/
 src/cv_tracker/faces/
+src/cv_tracker/results/

@@ -139,6 +139,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/haar_face_detector.py"
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/image_publisher.py"
   "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/retinaface.py"
+  "/root/tracking_ws/src/cv_tracker/scripts/cv_tracker/yolo_run.py"
   "/root/tracking_ws/src/cv_tracker/setup.py"
   "/usr/lib/aarch64-linux-gnu/cmake/GTest/GTestConfig.cmake"
   "/usr/lib/aarch64-linux-gnu/cmake/GTest/GTestConfigVersion.cmake"
@@ -254,6 +255,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "atomic_configure/haar_face_detector.py"
   "cv_tracker/catkin_generated/stamps/cv_tracker/face_recognizer.py.stamp"
   "atomic_configure/face_recognizer.py"
+  "cv_tracker/catkin_generated/stamps/cv_tracker/yolo_run.py.stamp"
+  "atomic_configure/yolo_run.py"
   "cv_tracker/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

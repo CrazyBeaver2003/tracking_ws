@@ -169,6 +169,7 @@ catkin_install_python(PROGRAMS
   scripts/cv_tracker/retinaface.py
   scripts/cv_tracker/haar_face_detector.py
   scripts/cv_tracker/face_recognizer.py
+  scripts/cv_tracker/yolo_run.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
