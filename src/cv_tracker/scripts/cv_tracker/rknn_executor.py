@@ -9,10 +9,7 @@ class RKNN_model_container:
         rknn.load_rknn(model_path)
 
         print("--> Init runtime environment")
-        # if target == None:
-        #     ret = rknn.init_runtime()
-        # else:
-        #     ret = rknn.init_runtime(target=target, device_id=device_id)
+        
         ret = rknn.init_runtime(core_mask=RKNNLite.NPU_CORE_0_1_2)
         if ret != 0:
             print("Init runtime environment failed")
@@ -20,9 +17,6 @@ class RKNN_model_container:
         print("done")
 
         self.rknn = rknn
-
-    # def __del__(self):
-    #     self.release()
 
     def run(self, inputs):
         if self.rknn is None:

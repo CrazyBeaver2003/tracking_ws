@@ -27,6 +27,9 @@ class FaceRecognizer:
         self.image_sub = rospy.Subscriber('/camera/image_raw/compressed', CompressedImage, self.image_callback)
         self.target_sub = rospy.Subscriber('/face_detection/targets', Target, self.target_callback)
         
+        # Добавляем publisher для изображения с распознанными лицами
+        self.annotated_image_pub = rospy.Publisher('/annotated_image/compressed', CompressedImage, queue_size=10)
+        
         # Инициализация модели RKNN для распознавания лиц
         from cv_tracker.rknn_executor import RKNN_model_container
         self.model = RKNN_model_container(model_path, target="rk3588")
@@ -42,7 +45,7 @@ class FaceRecognizer:
         self.load_reference_faces()
         
         # Порог расстояния для распознавания лица
-        self.recognition_threshold = 0.9
+        self.recognition_threshold = 1.0
         
         print("Распознаватель лиц инициализирован")
     
@@ -132,6 +135,9 @@ class FaceRecognizer:
             print("Изображение не получено")
             return
             
+        # Создаем копию изображения для рисования
+        annotated_image = self.current_image.copy()
+            
         for box in msg.boxes:
             try:
                 # Извлечение координат bbox
@@ -165,11 +171,27 @@ class FaceRecognizer:
                     
                     if name and distance < self.recognition_threshold:
                         print(f"Распознано лицо: {name}, расстояние: {distance:.4f}")
+                        
+                        # Рисуем рамку и подпись на изображении
+                        cv2.rectangle(annotated_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                        
+                        # Добавляем имя над рамкой
+                        label = f"{name} ({distance:.2f})"
+                        label_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)[0]
+                        cv2.rectangle(annotated_image, (x1, y1 - label_size[1] - 10), (x1 + label_size[0], y1), (0, 255, 0), -1)
+                        cv2.putText(annotated_image, label, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
                     else:
                         print(f"Лицо не распознано, минимальное расстояние: {distance:.4f}")
                         
             except Exception as e:
                 print(f"Ошибка при обработке лица: {e}")
+        
+        # Отправляем аннотированное изображение
+        msg_out = CompressedImage()
+        msg_out.header.stamp = rospy.Time.now()
+        msg_out.format = "jpeg"
+        msg_out.data = np.array(cv2.imencode('.jpg', annotated_image)[1]).tobytes()
+        self.annotated_image_pub.publish(msg_out)
 
 if __name__ == '__main__':
     try:

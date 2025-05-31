@@ -79,9 +79,24 @@ class YOLO11_ROS:
         self.bridge = CvBridge()
         self.image_sub = rospy.Subscriber('/camera/image_raw/compressed', CompressedImage, self.image_callback)
         self.pub = rospy.Publisher('/yolo/detections', Target, queue_size=1)
+        self.image_pub = rospy.Publisher('/yolo/annotated_image/compressed', CompressedImage, queue_size=1)
         from cv_tracker.rknn_executor import RKNN_model_container
         self.model = RKNN_model_container(model_path, target="rk3588")
         self.co_helper = COCO_test_helper(enable_letter_box=True)
+
+    def draw_boxes(self, image, boxes, scores):
+        """Отрисовка ограничивающих рамок на изображении"""
+        img_with_boxes = image.copy()
+        if boxes is not None:
+            for box, score in zip(boxes, scores):
+                x1, y1, x2, y2 = map(int, box)
+                # Рисуем рамку зеленым цветом
+                cv2.rectangle(img_with_boxes, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                # Добавляем текст с уверенностью
+                text = f"Person: {score:.2f}"
+                cv2.putText(img_with_boxes, text, (x1, y1 - 10),
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        return img_with_boxes
 
     def image_callback(self, msg):
         try:
@@ -115,6 +130,18 @@ class YOLO11_ROS:
                 bbox.name = CLASSES[0]  # Только люди
                 msg_out.boxes.append(bbox)
                 print(f"box: {bbox.center.x}, {bbox.center.y}, {bbox.size_x}, {bbox.size_y}, {bbox.name}")
+            
+            # Отрисовка боксов и публикация изображения
+            annotated_image = self.draw_boxes(img, real_boxes, scores)
+            try:
+                msg_img = CompressedImage()
+                msg_img.header.stamp = rospy.Time.now()
+                msg_img.format = "jpeg"
+                msg_img.data = np.array(cv2.imencode('.jpg', annotated_image)[1]).tostring()
+                self.image_pub.publish(msg_img)
+            except Exception as e:
+                rospy.logerr(f"Ошибка публикации изображения: {e}")
+        
         self.pub.publish(msg_out)
 
 if __name__ == '__main__':
