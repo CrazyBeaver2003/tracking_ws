@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Face Recognizer with Tracker -->
+    <node name="face_recognizer_with_tracking" 
+          pkg="cv_tracker" 
+          type="face_recognizer_with_tracking.py" 
+          output="screen">
+        <remap from="/camera/image_raw/compressed" to="/camera/image_raw/compressed"/>
+        <remap from="/face_detection/targets" to="/face_detection/targets"/>
+    </node>
+    
+    <!-- Face Tracker Service (optional) -->
+    <node name="face_tracker_service" 
+          pkg="cv_tracker" 
+          type="face_tracker_service.py" 
+          output="screen"/>
+    
+    <!-- Parameters -->
+    <param name="recognition_threshold" type="double" value="1.0"/>
+    <param name="max_lost_frames" type="int" value="15"/>
+</launch> 

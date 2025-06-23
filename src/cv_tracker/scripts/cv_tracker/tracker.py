@@ -18,7 +18,7 @@ class ObjectTracker:
         
         self.tracker = cv2.TrackerCSRT_create()
         self.image_sub = rospy.Subscriber('camera/image_raw/compressed', CompressedImage, self.image_callback)
-        self.target_sub = rospy.Subscriber('/face_detection/targets', Target, self.target_callback)
+        self.target_sub = rospy.Subscriber('/face_recognizer/target_face', Target, self.target_callback)
 
         self.image_pub = rospy.Publisher('object_tracker/image', Image, queue_size=1)
         self.target_pub = rospy.Publisher('object_tracker/target', Target, queue_size=1)

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Face Recognition with Tracker Node -->
+    <node name="face_recognizer_tracker" 
+          pkg="cv_tracker" 
+          type="face_recognizer_with_tracking.py" 
+          output="screen"
+          respawn="true">
+        
+        <!-- Параметры для трекера -->
+        <param name="tracker_timeout" value="5.0"/>
+        <param name="recognition_threshold" value="1.0"/>
+        
+        <!-- Переназначение топиков если необходимо -->
+        <remap from="/camera/image_raw/compressed" to="/camera/image_raw/compressed"/>
+        <remap from="/face_detection/targets" to="/face_detection/targets"/>
+        
+    </node>
+    
+    <!-- Можно добавить узел для камеры, если нужно -->
+    <!--
+    <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
+        <param name="video_device" value="/dev/video0"/>
+        <param name="image_width" value="640"/>
+        <param name="image_height" value="480"/>
+        <param name="pixel_format" value="yuyv"/>
+        <param name="camera_frame_id" value="usb_cam"/>
+        <param name="io_method" value="mmap"/>
+    </node>
+    -->
+    
+    <!-- Отображение изображений в RViz (опционально) -->
+    <!--
+    <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+        <remap from="image" to="/annotated_image"/>
+        <param name="autosize" value="true"/>
+    </node>
+    -->
+    
+</launch> 

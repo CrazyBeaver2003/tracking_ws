@@ -33,7 +33,7 @@ class FaceFollower:
         
         # Подписка на топик с информацией о лицах
         # self.target_sub = rospy.Subscriber('/face_detection/targets', Target, self.target_callback)
-        self.target_sub = rospy.Subscriber('/yolo/target_person', Target, self.target_callback)
+        self.target_sub = rospy.Subscriber('/face_recognizer/target_face', Target, self.target_callback)
         
         # Инициализация последовательного порта
         try:

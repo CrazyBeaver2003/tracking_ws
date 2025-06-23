@@ -3,8 +3,6 @@
         args="0 0 0 0 0 0 map camera_link" />
     <node pkg="cv_tracker" type="image_publisher.py" name="image_publisher" output="screen"/>
     <node pkg="cv_tracker" type="yolo_face.py" name="yolo_face" output="screen"/>
-    <node pkg="cv_tracker" type="face_recognizer.py" name="face_recognizer" output="screen"/>
-    <node pkg="cv_tracker" type="yolo_person.py" name="yolo_person" output="screen"/>
+    <node pkg="cv_tracker" type="face_recognizer_with_tracking.py" name="face_recognizer" output="screen"/>
     <node pkg="cv_tracker" type="follower.py" name="follower" output="screen"/>
-    <node pkg="cv_tracker" type="tracker.py" name="tracker" output="screen"/>
 </launch>
