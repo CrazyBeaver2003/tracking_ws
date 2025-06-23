@@ -125,6 +125,10 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/yolo_recognize_with_track.py")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/yolo_run.py")
 endif()
 
@@ -134,5 +138,13 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/follower.py")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/tracker.py")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cv_tracker" TYPE PROGRAM FILES "/root/tracking_ws/build/cv_tracker/catkin_generated/installspace/yolo_person.py")
 endif()
 

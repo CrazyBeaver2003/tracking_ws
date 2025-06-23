@@ -28,8 +28,9 @@ class FaceRecognizer:
         self.target_sub = rospy.Subscriber('/face_detection/targets', Target, self.target_callback)
         
         # Добавляем publisher для изображения с распознанными лицами
-        self.annotated_image_pub = rospy.Publisher('/annotated_image/compressed', CompressedImage, queue_size=10)
-        
+        self.annotated_image_pub = rospy.Publisher('/annotated_image/compressed', CompressedImage, queue_size=1)
+        self.target_face_pub = rospy.Publisher('/face_recognizer/target_face', Target, queue_size=1)
+
         # Инициализация модели RKNN для распознавания лиц
         from cv_tracker.rknn_executor import RKNN_model_container
         self.model = RKNN_model_container(model_path, target="rk3588")
@@ -171,6 +172,12 @@ class FaceRecognizer:
                     
                     if name and distance < self.recognition_threshold:
                         print(f"Распознано лицо: {name}, расстояние: {distance:.4f}")
+                        target_msg = Target()
+                        target_msg.image_height = msg.image_height
+                        target_msg.image_width = msg.image_width
+                        target_msg.boxes.append(box)
+                        target_msg.boxes[0].name = name
+                        self.target_face_pub.publish(target_msg)
                         
                         # Рисуем рамку и подпись на изображении
                         cv2.rectangle(annotated_image, (x1, y1), (x2, y2), (0, 255, 0), 2)

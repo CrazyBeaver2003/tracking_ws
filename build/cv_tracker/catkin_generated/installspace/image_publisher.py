@@ -8,11 +8,11 @@ class ImagePublisher:
     def __init__(self):
         rospy.init_node('image_publisher', anonymous=True)
         self.bridge = CvBridge()
-        self.image_pub = rospy.Publisher('/camera/image_raw/compressed', CompressedImage, queue_size=30)
+        self.image_pub = rospy.Publisher('/camera/image_raw/compressed', CompressedImage, queue_size=1)
         self.cap = cv2.VideoCapture(0)
         
-        self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-        self.cap.set(cv2.CAP_PROP_FPS, 30)
+        # self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        # self.cap.set(cv2.CAP_PROP_FPS, 30)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
         

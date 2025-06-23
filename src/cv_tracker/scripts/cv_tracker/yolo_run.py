@@ -78,11 +78,69 @@ class YOLO11_ROS:
         rospy.init_node('yolo11_ros', anonymous=True)
         self.bridge = CvBridge()
         self.image_sub = rospy.Subscriber('/camera/image_raw/compressed', CompressedImage, self.image_callback)
+        self.target_sub = rospy.Subscriber('/face_detection/targets', Target, self.target_callback)
         self.pub = rospy.Publisher('/yolo/detections', Target, queue_size=1)
+        self.target_person_pub = rospy.Publisher('/yolo/target_person', Target, queue_size=1)
+        self.target_face_image_pub = rospy.Publisher('/yolo/target_face_image', CompressedImage, queue_size=1)
         self.image_pub = rospy.Publisher('/yolo/annotated_image/compressed', CompressedImage, queue_size=1)
         from cv_tracker.rknn_executor import RKNN_model_container
         self.model = RKNN_model_container(model_path, target="rk3588")
         self.co_helper = COCO_test_helper(enable_letter_box=True)
+        self.person_boxes = None
+        self.face_target = Target()
+        self.known_person_box = None
+        self.raw_image = None
+
+    def target_callback(self, msg):
+        self.face_target = msg
+        if self.raw_image is None:
+            rospy.logwarn("No raw image available")
+            return
+
+        if self.person_boxes is not None:
+            for box in self.person_boxes:
+                if box.center.x > self.face_target.boxes[0].center.x - 10 and box.center.x < self.face_target.boxes[0].center.x + 10 and \
+                    box.center.y > self.face_target.boxes[0].center.y - 1 and box.center.y < self.face_target.boxes[0].center.y + 1:
+                    self.known_person_box = box
+                    break
+        if self.known_person_box is not None:
+            target_msg = Target()
+            target_msg.image_height = self.face_target.image_height
+            target_msg.image_width = self.face_target.image_width
+            target_msg.boxes.append(self.known_person_box)
+            target_msg.boxes[0].name = self.face_target.boxes[0].name
+            self.target_person_pub.publish(target_msg)
+            
+            try:
+                # Создаем изображение с отрисованным лицом
+                face_img = self.bridge.compressed_imgmsg_to_cv2(self.raw_image, desired_encoding="bgr8")
+                
+                # Отрисовываем рамку и имя
+                x1 = int(self.face_target.boxes[0].center.x - self.face_target.boxes[0].size_x/2)
+                y1 = int(self.face_target.boxes[0].center.y - self.face_target.boxes[0].size_y/2)
+                x2 = int(self.face_target.boxes[0].center.x + self.face_target.boxes[0].size_x/2)
+                y2 = int(self.face_target.boxes[0].center.y + self.face_target.boxes[0].size_y/2)
+                
+                # Рисуем рамку
+                cv2.rectangle(face_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                
+                # Добавляем имя
+                cv2.putText(face_img, self.face_target.boxes[0].name, (x1, y1-10),
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                
+                # Конвертируем обратно в CompressedImage
+                msg_img = CompressedImage()
+                msg_img.header.stamp = rospy.Time.now()
+                msg_img.format = "jpeg"
+                msg_img.data = np.array(cv2.imencode('.jpg', face_img)[1]).tostring()
+                
+                self.target_face_image_pub.publish(msg_img)
+                rospy.loginfo(f"Published face image with name: {self.face_target.boxes[0].name}")
+            except Exception as e:
+                rospy.logerr(f"Error processing face image: {e}")
+        else:
+            self.target_person_pub.publish(self.face_target)
+            rospy.logwarn("No matching person box found for face")
 
     def draw_boxes(self, image, boxes, scores):
         """Отрисовка ограничивающих рамок на изображении"""
@@ -99,6 +157,7 @@ class YOLO11_ROS:
         return img_with_boxes
 
     def image_callback(self, msg):
+        self.raw_image = msg
         try:
             img = self.bridge.compressed_imgmsg_to_cv2(msg, desired_encoding="bgr8")
         except Exception as e:
@@ -110,6 +169,7 @@ class YOLO11_ROS:
         input_data = np.expand_dims(img_pre, axis=0)
         outputs = self.model.run([input_data])
         boxes, classes, scores = postprocess_yolo_onnx(outputs[0])
+        self.person_boxes = boxes
         msg_out = Target()
         msg_out.image_height = float(img_height)
         msg_out.image_width = float(img_width)
